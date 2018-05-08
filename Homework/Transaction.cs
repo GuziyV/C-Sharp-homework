@@ -15,6 +15,11 @@ namespace Homework
             Withdraw = withdraw;
         }
 
+        public override string ToString()
+        {
+            return String.Format("id{0,-3}, Withdraw {1,-5} time {2,-10}", CarId, Withdraw, TransactionTime);
+        }
+
         public readonly DateTime TransactionTime;
 
         public readonly uint CarId;
