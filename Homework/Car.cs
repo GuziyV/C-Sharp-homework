@@ -19,7 +19,7 @@ namespace Homework
 
         public readonly CarType Type;
 
-        public int Balance { get; private set; }
+        public decimal Balance { get; private set; }
     }
 
     enum CarType
