@@ -20,6 +20,11 @@ namespace Homework
         public readonly CarType Type;
 
         public decimal Balance { get; private set; }
+
+        void addMoney(decimal money)
+        {
+            Balance += money;
+        }
     }
 
     enum CarType
