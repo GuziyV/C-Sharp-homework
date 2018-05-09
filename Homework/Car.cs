@@ -8,7 +8,7 @@ namespace Homework
 {
     class Car
     {
-        public Car(uint id, CarType type, int balance = 0)
+        public Car(uint id, CarType type, decimal balance = 0)
         {
             Id = id;
             Type = type;
@@ -21,10 +21,18 @@ namespace Homework
 
         public decimal Balance { get; private set; }
 
-        void addMoney(decimal money)
+        public decimal AddMoney(decimal value)
         {
-            Balance += money;
+            Balance += value;
+            return Balance;
         }
+
+        public decimal GiveMoney(decimal value)
+        {
+            Balance -= value;
+            return Balance;
+        }
+
     }
 
     enum CarType

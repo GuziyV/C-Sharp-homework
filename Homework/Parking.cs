@@ -12,18 +12,24 @@ namespace Homework
 
         public static Parking Instance { get { return lazy.Value; } }
 
-        private List<Car> cars = new List<Car>();
-        public List<Transaction> transactions = new List<Transaction>();
+        private Parking()
+        {
+            Cars = new List<Car>();
+            Transactions = new List<Transaction>();
+        }
+
+        public List<Car> Cars { get; private set; }
+        public List<Transaction> Transactions { get; private set; }
         public decimal Balance { get; private set; }
 
         public void AddCar(Car car)
         {
-            cars.Add(car);
+            Cars.Add(car);
         }
 
         public void ShowLastMinuteTransaction()
         {
-            var lastMinuteTransactins = transactions.Where<Transaction>(t => DateTime.Now - t.TransactionTime < new TimeSpan(0,1,0));
+            var lastMinuteTransactins = Transactions.Where<Transaction>(t => DateTime.Now - t.TransactionTime < new TimeSpan(0,1,0));
             foreach(var transaction in  lastMinuteTransactins)
             {
                 Console.WriteLine(transaction);
@@ -33,6 +39,15 @@ namespace Homework
         public void AddMoney(decimal amount)
         {
             Balance += amount;
+        }
+
+        public void AddCarMoney(uint carId, decimal value)
+        {
+
+            Car car = Cars.First<Car>(c => c.Id == carId); //TODO not found exception
+            car.GiveMoney(value);
+            
+
         }
     }
 }

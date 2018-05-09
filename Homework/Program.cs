@@ -10,22 +10,8 @@ namespace Homework
     {
         static void Main(string[] args)
         {
-            var parking = Parking.Instance;
-            while(true)
-            {
-                Console.WriteLine("enter");
-                int i = Int32.Parse(Console.ReadLine());
-                if(i == 1)
-                {
-                    parking.transactions.Add(new Transaction(2, 20));
-                }
-                else
-                {
-                    parking.ShowLastMinuteTransaction();
-                }
+            Menu.ChooseCommande();
 
-            }
         }
-
     }
 }
