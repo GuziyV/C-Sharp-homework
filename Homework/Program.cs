@@ -12,8 +12,18 @@ namespace Homework
         {
             while (Menu.Exit == false)
             {
-                Menu.ChooseCommande();
-                Console.WriteLine(new string('_', 10));
+                try
+                {
+                    Menu.ChooseCommande();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                finally
+                {
+                    Console.WriteLine(new string('_', 10));
+                }
             }
 
         }
