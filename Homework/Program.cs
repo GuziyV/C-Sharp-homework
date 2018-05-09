@@ -10,8 +10,11 @@ namespace Homework
     {
         static void Main(string[] args)
         {
-            while(true)
-            Menu.ChooseCommande();
+            while (Menu.Exit == false)
+            {
+                Menu.ChooseCommande();
+                Console.WriteLine(new string('_', 10));
+            }
 
         }
     }

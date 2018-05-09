@@ -13,7 +13,7 @@ namespace Homework
         static Settings()
         {
             //Config
-            _parkingSpace = 25;
+            ParkingSpace = 25;
             _fine = 1.5m;
             _numberOfSeconds = 5;
             //Endconfig
@@ -40,7 +40,7 @@ namespace Homework
             { CarType.Bus, 20}
         };
 
-        static private readonly uint _parkingSpace;
+        static public readonly uint ParkingSpace;
 
         static private readonly decimal _fine;
 
@@ -49,7 +49,7 @@ namespace Homework
             {
                 var lastMinuteTransactins = Parking.Transactions.
                     Where<Transaction>(t => DateTime.Now - t.TransactionTime < new TimeSpan(0, 1, 0));
-                using (StreamWriter sw = new StreamWriter("Transaction.log", true, System.Text.Encoding.Default))
+                using (StreamWriter sw = new StreamWriter("Transactions.log", true, System.Text.Encoding.Default))
                 {
                     sw.WriteLine("{0} transactions:", DateTime.Now);
                     foreach (var transaction in lastMinuteTransactins)
