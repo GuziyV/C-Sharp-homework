@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -11,17 +12,25 @@ namespace Homework
     {
         static Settings()
         {
+            //Config
             _parkingSpace = 25;
             _fine = 1.5m;
+            _numberOfSeconds = 5;
+            //Endconfig
             Parking = Parking.Instance;
-            _takeMoney = new ThreadStart(Timeout);
+            int minute = 60;
+            _takeMoney = new Timer(new TimerCallback(writeTransactionToFile), null, 0, minute * 1000);
+            _writeToFile = new Timer(new TimerCallback(Timeout), null, 0, _numberOfSeconds * 1000);
+
         }
 
-        static private ThreadStart _takeMoney;
+        static private Timer _takeMoney;
+
+        static private Timer _writeToFile;
 
         static public Parking Parking;
 
-        static public int NumberOfSeconds {get;set;}
+        static private int _numberOfSeconds;
 
         static Dictionary<CarType, decimal> prices = new Dictionary<CarType, decimal>()
         {
@@ -35,9 +44,25 @@ namespace Homework
 
         static private readonly decimal _fine;
 
-        private static void Timeout()
+        private static void writeTransactionToFile(object obj)
         {
-            foreach(Car car in Parking.Cars)
+            {
+                var lastMinuteTransactins = Parking.Transactions.
+                    Where<Transaction>(t => DateTime.Now - t.TransactionTime < new TimeSpan(0, 1, 0));
+                using (StreamWriter sw = new StreamWriter("Transaction.log", true, System.Text.Encoding.Default))
+                {
+                    sw.WriteLine("{0} transactions:", DateTime.Now);
+                    foreach (var transaction in lastMinuteTransactins)
+                    {
+                        sw.WriteLine(transaction);
+                    }
+                }
+            }
+        }
+
+        private static void Timeout(object obj)
+        {
+            foreach (Car car in Parking.Cars)
             {
                 decimal price = prices[car.Type];
                 if ((car.Balance - price) < 0)
@@ -46,8 +71,10 @@ namespace Homework
                 }
                 car.GiveMoney(price);
                 Parking.AddMoney(price);
+                Settings.Parking.addTransaction(new Transaction(car.Id, price));
             }
-            Thread.Sleep(NumberOfSeconds * 1000);
+            Thread.Sleep(_numberOfSeconds * 1000);
+            
         }
     }
 }

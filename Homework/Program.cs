@@ -10,6 +10,7 @@ namespace Homework
     {
         static void Main(string[] args)
         {
+            while(true)
             Menu.ChooseCommande();
 
         }
