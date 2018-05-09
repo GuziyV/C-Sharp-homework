@@ -32,7 +32,7 @@ namespace Homework
                     addBalance();
                     break;
                 case 3:
-                    deleteCar();
+                    removeCar();
                     break;
                 case 4:
                     showLastMinuteTransactions();
@@ -90,17 +90,12 @@ namespace Homework
             uint id = UInt32.Parse(Console.ReadLine());
             Console.WriteLine("enter amount: ");
             decimal amount = Decimal.Parse(Console.ReadLine());
-            if (Settings.Parking.AddCarMoney(id, amount))
-            {
-                Console.WriteLine("**Added**");
-            }
-            else
-            {
-                Console.WriteLine("**Not found such car**");
-            }
+            Settings.Parking.AddCarMoney(id, amount);
+            Console.WriteLine("**Added**");
+
         }
 
-        private static void deleteCar()
+        private static void removeCar()
         {
             Console.WriteLine("enter car id: ");
             uint id = UInt32.Parse(Console.ReadLine());
@@ -109,7 +104,7 @@ namespace Homework
                 throw new Exception("You havent enough money");
             }
             Settings.Parking.DeleteCar(id);
-            Console.WriteLine("**Deleted**");
+            Console.WriteLine("**Removed**");
 
         }
 

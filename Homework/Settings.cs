@@ -13,13 +13,13 @@ namespace Homework
         static Settings()
         {
             //Config
-            ParkingSpace = 25;
+            ParkingSpace = 10;
             _fine = 1.5m;
             _numberOfSeconds = 5;
             //Endconfig
             Parking = Parking.Instance;
             int minute = 60;
-            _takeMoney = new Timer(new TimerCallback(writeTransactionToFile), null, minute*1000, minute * 1000);
+            _takeMoney = new Timer(new TimerCallback(writeTransactionToFile), null, minute * 1000, minute * 1000);
             _writeToFile = new Timer(new TimerCallback(Timeout), null, 0, _numberOfSeconds * 1000);
 
         }
@@ -28,9 +28,11 @@ namespace Homework
 
         static private Timer _writeToFile;
 
-        static public Parking Parking;
-
         static private int _numberOfSeconds;
+
+        static private readonly decimal _fine;
+
+        static public Parking Parking;
 
         static Dictionary<CarType, decimal> prices = new Dictionary<CarType, decimal>()
         {
@@ -40,9 +42,7 @@ namespace Homework
             { CarType.Bus, 20}
         };
 
-        static public readonly uint ParkingSpace;
-
-        static private readonly decimal _fine;
+        static public uint ParkingSpace { get; private set; }
 
         private static void writeTransactionToFile(object obj)
         {
@@ -73,7 +73,7 @@ namespace Homework
                 }
                 car.GiveMoney(price);
                 Parking.AddMoney(price);
-                Settings.Parking.addTransaction(new Transaction(car.Id, price));
+                Parking.AddTransaction(new Transaction(car.Id, price));
             }
         }
     }
