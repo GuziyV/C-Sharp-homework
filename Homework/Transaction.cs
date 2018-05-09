@@ -17,7 +17,7 @@ namespace Homework
 
         public override string ToString()
         {
-            return String.Format("id{0,-3}, Withdraw {1,-5} time {2,-10}", CarId, Withdraw, TransactionTime);
+            return String.Format("Id {0,-5}Withdraw: {1, -6:0.00} {2,-10}", CarId, Withdraw, TransactionTime);
         }
 
         public readonly DateTime TransactionTime;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,8 @@ namespace Homework
 
         private Parking()
         {
+            Cars = new List<Car>();
+            Transactions = new List<Transaction>();
 
         }
 
@@ -23,21 +26,42 @@ namespace Homework
 
         public void AddCar(Car car)
         {
-            cars.Add(car);
+            Cars.Add(car);
         }
 
-        public void ShowLastMinuteTransaction()
+        public void addTransaction(Transaction transaction)
         {
-            var lastMinuteTransactins = Transactions.Where<Transaction>(t => DateTime.Now - t.TransactionTime < new TimeSpan(0,1,0));
-            foreach(var transaction in  lastMinuteTransactins)
-            {
-                Console.WriteLine(transaction);
-            }
+            Transactions.Add(transaction);
         }
 
         public void AddMoney(decimal amount)
         {
             Balance += amount;
+        }
+
+        public bool AddCarMoney(uint carId, decimal value)
+        {
+
+            Car car = Cars.First<Car>(c => c.Id == carId); //TODO not found exception
+            if (car == null)
+            {
+                return false;
+            }
+            else
+            {
+                car.AddMoney(value);
+                return true;
+            }
+        }
+        public bool DeleteCar(uint carId)
+        {
+            Car car = Cars.First<Car>(c => c.Id == carId);
+            if(car == null)
+            {
+                return false;
+            }
+            Cars.Remove(car);
+            return true;
         }
     }
 }
