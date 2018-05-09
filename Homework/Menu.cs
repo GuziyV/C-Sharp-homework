@@ -61,6 +61,9 @@ namespace Homework
         {
             Console.WriteLine("enter car id: ");
             uint id = UInt32.Parse(Console.ReadLine());
+            Console.WriteLine("enter amount: ");
+            decimal amount = Decimal.Parse(Console.ReadLine());
+            Settings.Parking.AddCarMoney(id, amount);
         }
         
     }
