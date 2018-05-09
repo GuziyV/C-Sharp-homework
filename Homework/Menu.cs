@@ -15,12 +15,13 @@ namespace Homework
             Console.WriteLine("Choose commande: ");
             Console.WriteLine("1. Add car");
             Console.WriteLine("2. Add car balance(by id)");
-            Console.WriteLine("3. Delete car");
+            Console.WriteLine("3. Delete car(by id)");
             Console.WriteLine("4. Output last minute transaction history");
             Console.WriteLine("5. Get earnings");
             Console.WriteLine("6. Get free places");
             Console.WriteLine("7. Output Transactions.log");
-            Console.WriteLine("8. Exit");
+            Console.WriteLine("8. Show car balance(by id)");
+            Console.WriteLine("9. Exit");
             int commande = Int32.Parse(Console.ReadLine());
             switch (commande)
             {
@@ -31,7 +32,7 @@ namespace Homework
                     addBalance();
                     break;
                 case 3:
-                    deleteCar();
+                    removeCar();
                     break;
                 case 4:
                     showLastMinuteTransactions();
@@ -43,9 +44,12 @@ namespace Homework
                     showFreeSpaces();
                     break;
                 case 7:
-                    outputTransaction();
+                    outputTransactions();
                     break;
                 case 8:
+                    showCarBalance();
+                    break;
+                case 9:
                     exit();
                     break;
                 default:
@@ -86,28 +90,22 @@ namespace Homework
             uint id = UInt32.Parse(Console.ReadLine());
             Console.WriteLine("enter amount: ");
             decimal amount = Decimal.Parse(Console.ReadLine());
-            if (Settings.Parking.AddCarMoney(id, amount))
-            {
-                Console.WriteLine("**Added**");
-            }
-            else
-            {
-                Console.WriteLine("**Not found such car**");
-            }
+            Settings.Parking.AddCarMoney(id, amount);
+            Console.WriteLine("**Added**");
+
         }
 
-        private static void deleteCar()
+        private static void removeCar()
         {
             Console.WriteLine("enter car id: ");
             uint id = UInt32.Parse(Console.ReadLine());
-            if (Settings.Parking.DeleteCar(id))
+            if(Settings.Parking.GetCarBalance(id) < 0)
             {
-                Console.WriteLine("**Deleted**");
+                throw new Exception("You havent enough money");
             }
-            else
-            {
-                Console.WriteLine("**Not found such car**");
-            }
+            Settings.Parking.DeleteCar(id);
+            Console.WriteLine("**Removed**");
+
         }
 
         private static void showLastMinuteTransactions()
@@ -131,7 +129,14 @@ namespace Homework
 
         private static void showParkingBalance() => Console.WriteLine(Settings.Parking.Balance);
 
-        private static void outputTransaction()
+        private static void showCarBalance()
+        {
+            Console.WriteLine("enter id: ");
+            uint id = UInt32.Parse(Console.ReadLine());
+            Console.WriteLine("Balance: {0}", Settings.Parking.GetCarBalance(id));
+        }
+
+        private static void outputTransactions()
         {
             using (StreamReader sr = new StreamReader("Transactions.log", System.Text.Encoding.Default))
             {

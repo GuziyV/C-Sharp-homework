@@ -17,7 +17,6 @@ namespace Homework
         {
             Cars = new List<Car>();
             Transactions = new List<Transaction>();
-
         }
 
         public List<Car> Cars { get; private set; }
@@ -29,7 +28,7 @@ namespace Homework
             Cars.Add(car);
         }
 
-        public void addTransaction(Transaction transaction)
+        public void AddTransaction(Transaction transaction)
         {
             Transactions.Add(transaction);
         }
@@ -39,29 +38,25 @@ namespace Homework
             Balance += amount;
         }
 
-        public bool AddCarMoney(uint carId, decimal value)
+        public bool AddCarMoney(uint carId, decimal amount)
         {
-
-            Car car = Cars.First<Car>(c => c.Id == carId); //TODO not found exception
+            Car car = Cars.First<Car>(c => c.Id == carId);
             if (car == null)
             {
                 return false;
             }
-            else
-            {
-                car.AddMoney(value);
-                return true;
-            }
+            car.AddMoney(amount);
+            return true;
         }
-        public bool DeleteCar(uint carId)
+        public void DeleteCar(uint carId)
         {
             Car car = Cars.First<Car>(c => c.Id == carId);
-            if(car == null)
-            {
-                return false;
-            }
             Cars.Remove(car);
-            return true;
+        }
+        public decimal GetCarBalance(uint id)
+        {
+            Car car = Cars.First<Car>(c => c.Id == id);
+            return car.Balance;     
         }
     }
 }
