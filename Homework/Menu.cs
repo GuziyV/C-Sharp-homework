@@ -12,17 +12,17 @@ namespace Homework
         public static bool Exit { get; private set; } = false;
         public static void ChooseCommande()
         {
-            Console.WriteLine("Choose commande: ");
+            Console.WriteLine("Choose commande");
             Console.WriteLine("1. Add car");
             Console.WriteLine("2. Add car balance(by id)");
             Console.WriteLine("3. Delete car(by id)");
             Console.WriteLine("4. Output last minute transaction history");
-            Console.WriteLine("5. Get earnings");
-            Console.WriteLine("6. Show last minute earnings");
+            Console.WriteLine("5. Show parking profit");
+            Console.WriteLine("6. Show last minute profit");
             Console.WriteLine("7. Output Transactions.log");
             Console.WriteLine("8. Show car balance(by id)");
-            Console.WriteLine("9. Show free place");
-            Console.WriteLine("10. Show Number of cars in a parking lot");
+            Console.WriteLine("9. Show number of free places");
+            Console.WriteLine("10. Show number of cars in a parking lot");
             Console.WriteLine("11. Exit");
             int commande = Int32.Parse(Console.ReadLine());
             switch (commande)
@@ -62,9 +62,7 @@ namespace Homework
                     break;
                 default:
                     throw new WrongTypeOfCarException("Unknown command");
-
             }
-
         }
         private static void addCar()
         {
