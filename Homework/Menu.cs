@@ -21,7 +21,7 @@ namespace Homework
             Console.WriteLine("6. Show last minute earnings");
             Console.WriteLine("7. Output Transactions.log");
             Console.WriteLine("8. Show car balance(by id)");
-            Console.WriteLine("9. Show gree place");
+            Console.WriteLine("9. Show free place");
             Console.WriteLine("10. Show Number of cars in a parking lot");
             Console.WriteLine("11. Exit");
             int commande = Int32.Parse(Console.ReadLine());
