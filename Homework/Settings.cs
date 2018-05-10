@@ -57,7 +57,7 @@ namespace Homework
                     {
                         sum += transaction.Withdraw;
                     }
-                    sw.WriteLine("Sum: {0}", sum);
+                    sw.WriteLine("Sum: {0:0.00}", sum);
                 }
             }
         }
