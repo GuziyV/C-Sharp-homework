@@ -10,6 +10,39 @@ namespace Homework
     {
         static void Main(string[] args)
         {
+            while (Menu.Exit == false)
+            {
+                try
+                {
+                    Menu.ChooseCommande();
+                }
+                
+                catch (WrongCommandException ex)
+                {
+                    Console.WriteLine("**{0}**", ex.Message);
+                }
+                catch (WrongTypeOfCarException ex)
+                {
+                    Console.WriteLine("**{0}**", ex.Message);
+                }
+                catch(NotEnoughMoneyException ex)
+                {
+                    Console.WriteLine("**{0}**", ex.Message);
+                }
+                catch (NotEnoughSpaceException ex)
+                {
+                    Console.WriteLine("**{0}**", ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("**{0}**", ex.Message);
+                }
+                finally
+                {
+                    Console.WriteLine(new string('_', 10));
+                }
+            }
+
         }
     }
 }
