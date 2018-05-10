@@ -25,6 +25,10 @@ namespace Homework
                 {
                     Console.WriteLine("**{0}**", ex.Message);
                 }
+                catch(NotEnoughMoneyException ex)
+                {
+                    Console.WriteLine("**{0}**", ex.Message);
+                }
                 catch (NotEnoughSpaceException ex)
                 {
                     Console.WriteLine("**{0}**", ex.Message);

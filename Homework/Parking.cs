@@ -66,7 +66,7 @@ namespace Homework
             return car.Balance;     
         }
 
-        public bool isIdOfCarExist(uint id)
+        public bool IsIdOfCarExist(uint id)
         {
             Car car = Cars.FirstOrDefault<Car>(c => c.Id == id);
             if(car == null)
