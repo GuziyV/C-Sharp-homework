@@ -19,8 +19,8 @@ namespace Homework
             //Endconfig
             Parking = Parking.Instance;
             int minute = 60;
-            _takeMoney = new Timer(new TimerCallback(writeTransactionToFile), null, minute * 1000, minute * 1000);
-            _writeToFile = new Timer(new TimerCallback(Timeout), null, 0, _numberOfSeconds * 1000);
+            _writeToFile = new Timer(new TimerCallback(writeTransactionToFile), null, 1000, minute * 1000);
+            _takeMoney = new Timer(new TimerCallback(Timeout), null, 0, _numberOfSeconds * 1000);
 
         }
 
