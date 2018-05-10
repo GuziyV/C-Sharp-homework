@@ -13,7 +13,6 @@ namespace Homework
             Id = id;
             Type = type;
             Balance = balance;
-
         }
         public uint Id { get; private set; }
 

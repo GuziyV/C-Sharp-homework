@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Homework
 {
     class Menu
-    {//TODO wrong parse exception
+    {
         public static bool Exit { get; private set; } = false;
         public static void ChooseCommande()
         {
@@ -18,10 +18,12 @@ namespace Homework
             Console.WriteLine("3. Delete car(by id)");
             Console.WriteLine("4. Output last minute transaction history");
             Console.WriteLine("5. Get earnings");
-            Console.WriteLine("6. Get free places");
+            Console.WriteLine("6. Show last minute earnings");
             Console.WriteLine("7. Output Transactions.log");
             Console.WriteLine("8. Show car balance(by id)");
-            Console.WriteLine("9. Exit");
+            Console.WriteLine("9. Show gree place");
+            Console.WriteLine("10. Show Number of cars in a parking lot");
+            Console.WriteLine("11. Exit");
             int commande = Int32.Parse(Console.ReadLine());
             switch (commande)
             {
@@ -41,7 +43,7 @@ namespace Homework
                     showParkingBalance();
                     break;
                 case 6:
-                    showFreeSpaces();
+                    showLastMinuteEarnings();
                     break;
                 case 7:
                     outputTransactions();
@@ -50,6 +52,12 @@ namespace Homework
                     showCarBalance();
                     break;
                 case 9:
+                    showFreeSpaces(); 
+                    break;
+                case 10:
+                    showNumberOfCars();
+                    break;
+                case 11:
                     exit();
                     break;
                 default:
@@ -62,31 +70,34 @@ namespace Homework
         {
             Console.WriteLine("enter Car Id: ");
             uint id = UInt32.Parse(Console.ReadLine());
-            if(Settings.Parking.isIdOfCarExist(id))
+            if (Settings.Parking.IsIdOfCarExist(id))
             {
                 throw new WrongCommandException("Id is already exists");
             }
             Console.WriteLine("enter type of car(Passenger/Truck/Bus/Motorcycle): ");
             string type = Console.ReadLine();
-            Console.WriteLine("Enter car balance: ");
-            decimal balance = Decimal.Parse(Console.ReadLine());
+            CarType cType;
+
             switch (type.ToLower())
             {
                 case "passenger":
-                    Settings.Parking.AddCar(new Car(id, CarType.Passenger, balance));
+                    cType = CarType.Passenger;
                     break;
                 case "truck":
-                    Settings.Parking.AddCar(new Car(id, CarType.Truck, balance));
+                    cType = CarType.Truck;
                     break;
                 case "bus":
-                    Settings.Parking.AddCar(new Car(id, CarType.Bus, balance));
+                    cType = CarType.Bus;
                     break;
                 case "motorcycle":
-                    Settings.Parking.AddCar(new Car(id, CarType.Motorcycle, balance));
+                    cType = CarType.Motorcycle;
                     break;
                 default:
-                    throw new WrongTypeOfCarException("Wrong type of car"); //TODO my own exception
+                    throw new WrongTypeOfCarException("Wrong type of car");
             }
+            Console.WriteLine("Enter car balance: ");
+            decimal balance = Decimal.Parse(Console.ReadLine());
+            Settings.Parking.AddCar(new Car(id, cType, balance));
         }
         private static void addBalance()
         {
@@ -103,9 +114,9 @@ namespace Homework
         {
             Console.WriteLine("enter car id: ");
             uint id = UInt32.Parse(Console.ReadLine());
-            if(Settings.Parking.GetCarBalance(id) < 0)
+            if (Settings.Parking.GetCarBalance(id) < 0)
             {
-                throw new Exception("You havent enough money");
+                throw new NotEnoughMoneyException("You havent enough money");
             }
             Settings.Parking.DeleteCar(id);
             Console.WriteLine("**Removed**");
@@ -131,13 +142,11 @@ namespace Homework
             Console.WriteLine("**{0} free**", Settings.ParkingSpace - Settings.Parking.Cars.Count);
         }
 
-        private static void showParkingBalance() => Console.WriteLine(Settings.Parking.Balance);
-
         private static void showCarBalance()
         {
             Console.WriteLine("enter id: ");
             uint id = UInt32.Parse(Console.ReadLine());
-            Console.WriteLine("Balance: {0}", Settings.Parking.GetCarBalance(id));
+            Console.WriteLine("**Balance: {0}**", Settings.Parking.GetCarBalance(id));
         }
 
         private static void outputTransactions()
@@ -151,5 +160,19 @@ namespace Homework
                 }
             }
         }
+        private static void showLastMinuteEarnings()
+        {
+            var lastMinuteTransactins = Settings.Parking.Transactions.
+                Where<Transaction>(t => DateTime.Now - t.TransactionTime < new TimeSpan(0, 1, 0));
+            decimal sum = 0;
+            foreach (var transaction in lastMinuteTransactins)
+            {
+                sum += transaction.Withdraw;
+            }
+            Console.WriteLine("**{0}**", sum);
+        }
+        private static void showNumberOfCars() => Console.WriteLine("**{0}**", Settings.Parking.Cars.Count);
+
+        private static void showParkingBalance() => Console.WriteLine("**{0}**", Settings.Parking.Balance);
     }
 }

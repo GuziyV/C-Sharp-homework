@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Car.cs" />
     <Compile Include="Menu.cs" />
+    <Compile Include="NotEnoughMoneyException.cs" />
     <Compile Include="NotEnoughSpaceException.cs" />
     <Compile Include="Parking.cs" />
     <Compile Include="Program.cs" />
