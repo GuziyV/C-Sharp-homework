@@ -16,9 +16,22 @@ namespace Homework
                 {
                     Menu.ChooseCommande();
                 }
+                
+                catch (WrongCommandException ex)
+                {
+                    Console.WriteLine("**{0}**", ex.Message);
+                }
+                catch (WrongTypeOfCarException ex)
+                {
+                    Console.WriteLine("**{0}**", ex.Message);
+                }
+                catch (NotEnoughSpaceException ex)
+                {
+                    Console.WriteLine("**{0}**", ex.Message);
+                }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    Console.WriteLine("**{0}**", ex.Message);
                 }
                 finally
                 {
