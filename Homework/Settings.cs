@@ -13,7 +13,7 @@ namespace Homework
         static Settings()
         {
             //Config
-            ParkingSpace = 10;
+            ParkingSpace = 6;
             _fine = 1.5m;
             _numberOfSeconds = 5;
             //Endconfig

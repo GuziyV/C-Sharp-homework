@@ -53,7 +53,7 @@ namespace Homework
                     exit();
                     break;
                 default:
-                    throw new Exception("Unknown command");
+                    throw new WrongTypeOfCarException("Unknown command");
 
             }
 
@@ -62,6 +62,10 @@ namespace Homework
         {
             Console.WriteLine("enter Car Id: ");
             uint id = UInt32.Parse(Console.ReadLine());
+            if(Settings.Parking.isIdOfCarExist(id))
+            {
+                throw new WrongCommandException("Id is already exists");
+            }
             Console.WriteLine("enter type of car(Passenger/Truck/Bus/Motorcycle): ");
             string type = Console.ReadLine();
             Console.WriteLine("Enter car balance: ");
@@ -81,7 +85,7 @@ namespace Homework
                     Settings.Parking.AddCar(new Car(id, CarType.Motorcycle, balance));
                     break;
                 default:
-                    throw new Exception(); //TODO my own exception
+                    throw new WrongTypeOfCarException("Wrong type of car"); //TODO my own exception
             }
         }
         private static void addBalance()

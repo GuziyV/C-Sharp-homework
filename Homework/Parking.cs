@@ -25,7 +25,14 @@ namespace Homework
 
         public void AddCar(Car car)
         {
-            Cars.Add(car);
+            if (Settings.Parking.Cars.Count >= Settings.ParkingSpace)
+            {
+                throw new NotEnoughSpaceException("Not enough space in the parking lot, please wait");
+            }
+            else
+            {
+                Cars.Add(car);
+            }
         }
 
         public void AddTransaction(Transaction transaction)
@@ -57,6 +64,16 @@ namespace Homework
         {
             Car car = Cars.First<Car>(c => c.Id == id);
             return car.Balance;     
+        }
+
+        public bool isIdOfCarExist(uint id)
+        {
+            Car car = Cars.FirstOrDefault<Car>(c => c.Id == id);
+            if(car == null)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
