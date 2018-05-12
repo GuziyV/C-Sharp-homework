@@ -101,6 +101,10 @@ namespace Homework
         {
             Console.WriteLine("enter car id: ");
             uint id = UInt32.Parse(Console.ReadLine());
+            if (!Settings.Parking.IsIdOfCarExist(id))
+            {
+                throw new WrongCommandException("Can' t find a car with such id");
+            }
             Console.WriteLine("enter amount: ");
             decimal amount = Decimal.Parse(Console.ReadLine());
             Settings.Parking.AddCarMoney(id, amount);

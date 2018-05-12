@@ -21,8 +21,9 @@ namespace Homework
             int minute = 60;
             _writeToFile = new Timer(new TimerCallback(writeTransactionToFile), null, 1000, minute * 1000);
             _takeMoney = new Timer(new TimerCallback(Timeout), null, 0, _numberOfSeconds * 1000);
-
         }
+
+        private static StreamWriter _log = new StreamWriter("Transactions.log", true, System.Text.Encoding.Default);
 
         static private Timer _takeMoney;
 
@@ -48,17 +49,15 @@ namespace Homework
         {
             {
                 var lastMinuteTransactins = Parking.Transactions.
-                    Where<Transaction>(t => DateTime.Now - t.TransactionTime < new TimeSpan(0, 1, 0));
-                using (StreamWriter sw = new StreamWriter("Transactions.log", true, System.Text.Encoding.Default))
+                    Where<Transaction>(t => DateTime.Now - t.TransactionTime < new TimeSpan(0, 1, 0));              
+                _log.WriteLine("Date and time: {0}", DateTime.Now);
+                decimal sum = 0;
+                foreach (var transaction in lastMinuteTransactins)
                 {
-                    sw.WriteLine("Date and time: {0}", DateTime.Now);
-                    decimal sum = 0;
-                    foreach (var transaction in lastMinuteTransactins)
-                    {
-                        sum += transaction.Withdraw;
-                    }
-                    sw.WriteLine("Sum: {0:0.00}", sum);
+                    sum += transaction.Withdraw;
                 }
+                _log.WriteLine("Sum: {0:0.00}", sum);
+                
             }
         }
 
@@ -75,6 +74,13 @@ namespace Homework
                 Parking.AddMoney(price);
                 Parking.AddTransaction(new Transaction(car.Id, price));
             }
+        }
+
+        public static void StopWorking()
+        {
+            _log.Dispose();
+            _takeMoney.Dispose();
+            _writeToFile.Dispose();
         }
     }
 }
