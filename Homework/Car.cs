@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Homework
+namespace Parking
 {
-    class Car
+    public class Car
     {
         public Car(uint id, CarType type, decimal balance = 0)
         {
