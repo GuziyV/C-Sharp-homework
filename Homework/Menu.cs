@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Homework
 {
-    class Menu
+    static class Menu
     {
         public static bool Exit { get; private set; } = false;
         public static void ChooseCommande()
@@ -101,6 +101,10 @@ namespace Homework
         {
             Console.WriteLine("enter car id: ");
             uint id = UInt32.Parse(Console.ReadLine());
+            if (!Settings.Parking.IsIdOfCarExist(id))
+            {
+                throw new WrongCommandException("Can' t find a car with such id");
+            }
             Console.WriteLine("enter amount: ");
             decimal amount = Decimal.Parse(Console.ReadLine());
             Settings.Parking.AddCarMoney(id, amount);
@@ -123,8 +127,7 @@ namespace Homework
 
         private static void showLastMinuteTransactions()
         {
-            var lastMinuteTransactins = Settings.Parking.Transactions.
-                Where<Transaction>(t => DateTime.Now - t.TransactionTime < new TimeSpan(0, 1, 0));
+            var lastMinuteTransactins = Settings.Parking.GetLastMinuteTransactions();
             foreach (var transaction in lastMinuteTransactins)
             {
                 Console.WriteLine(transaction);
@@ -133,11 +136,12 @@ namespace Homework
         private static void exit()
         {
             Exit = true;
+            Settings.Parking.Dispose();
         }
 
         private static void showFreeSpaces()
         {
-            Console.WriteLine("**{0} free**", Settings.ParkingSpace - Settings.Parking.Cars.Count);
+            Console.WriteLine("**{0} free**", Settings.ParkingSpace - Settings.Parking.GetNumberOfCars());
         }
 
         private static void showCarBalance()
@@ -160,8 +164,7 @@ namespace Homework
         }
         private static void showLastMinuteEarnings()
         {
-            var lastMinuteTransactins = Settings.Parking.Transactions.
-                Where<Transaction>(t => DateTime.Now - t.TransactionTime < new TimeSpan(0, 1, 0));
+            var lastMinuteTransactins = Settings.Parking.GetLastMinuteTransactions();
             decimal sum = 0;
             foreach (var transaction in lastMinuteTransactins)
             {
@@ -169,7 +172,7 @@ namespace Homework
             }
             Console.WriteLine("**{0}**", sum);
         }
-        private static void showNumberOfCars() => Console.WriteLine("**{0}**", Settings.Parking.Cars.Count);
+        private static void showNumberOfCars() => Console.WriteLine("**{0}**", Settings.Parking.GetNumberOfCars());
 
         private static void showParkingBalance() => Console.WriteLine("**{0}**", Settings.Parking.Balance);
     }
