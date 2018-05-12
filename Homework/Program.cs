@@ -10,7 +10,7 @@ namespace Homework
     {
         static void Main(string[] args)
         {
-            while (Menu.Exit == false)
+            while (Menu.ExitProgram == false)
             {
                 try
                 {
