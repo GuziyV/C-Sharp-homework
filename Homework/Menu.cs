@@ -9,7 +9,7 @@ namespace Homework
 {
     static class Menu
     {
-        public static bool Exit { get; private set; } = false;
+        public static bool ExitProgram { get; private set; } = false;
         public static void ChooseCommande()
         {
             Console.WriteLine("Choose commande");
@@ -28,43 +28,43 @@ namespace Homework
             switch (commande)
             {
                 case 1:
-                    addCar();
+                    AddCar();
                     break;
                 case 2:
-                    addBalance();
+                    AddBalance();
                     break;
                 case 3:
-                    removeCar();
+                    RemoveCar();
                     break;
                 case 4:
-                    showLastMinuteTransactions();
+                    ShowLastMinuteTransactions();
                     break;
                 case 5:
-                    showParkingBalance();
+                    ShowParkingBalance();
                     break;
                 case 6:
-                    showLastMinuteEarnings();
+                    ShowLastMinuteEarnings();
                     break;
                 case 7:
-                    outputTransactions();
+                    OutputTransactions();
                     break;
                 case 8:
-                    showCarBalance();
+                    ShowCarBalance();
                     break;
                 case 9:
-                    showFreeSpaces(); 
+                    ShowFreeSpaces(); 
                     break;
                 case 10:
-                    showNumberOfCars();
+                    ShowNumberOfCars();
                     break;
                 case 11:
-                    exit();
+                    Exit();
                     break;
                 default:
                     throw new WrongTypeOfCarException("Unknown command");
             }
         }
-        private static void addCar()
+        private static void AddCar()
         {
             Console.WriteLine("enter Car Id: ");
             uint id = UInt32.Parse(Console.ReadLine());
@@ -97,7 +97,7 @@ namespace Homework
             decimal balance = Decimal.Parse(Console.ReadLine());
             Parking.Instance.AddCar(new Car(id, cType, balance));
         }
-        private static void addBalance()
+        private static void AddBalance()
         {
             Console.WriteLine("enter car id: ");
             uint id = UInt32.Parse(Console.ReadLine());
@@ -112,7 +112,7 @@ namespace Homework
 
         }
 
-        private static void removeCar()
+        private static void RemoveCar()
         {
             Console.WriteLine("enter car id: ");
             uint id = UInt32.Parse(Console.ReadLine());
@@ -125,7 +125,7 @@ namespace Homework
 
         }
 
-        private static void showLastMinuteTransactions()
+        private static void ShowLastMinuteTransactions()
         {
             var lastMinuteTransactins = Parking.Instance.GetLastMinuteTransactions();
             foreach (var transaction in lastMinuteTransactins)
@@ -133,25 +133,25 @@ namespace Homework
                 Console.WriteLine(transaction);
             }
         }
-        private static void exit()
+        private static void Exit()
         {
-            Exit = true;
+            ExitProgram = true;
             Parking.Instance.Dispose();
         }
 
-        private static void showFreeSpaces()
+        private static void ShowFreeSpaces()
         {
             Console.WriteLine("**{0} free**", Settings.ParkingSpace - Parking.Instance.GetNumberOfCars());
         }
 
-        private static void showCarBalance()
+        private static void ShowCarBalance()
         {
             Console.WriteLine("enter id: ");
             uint id = UInt32.Parse(Console.ReadLine());
             Console.WriteLine("**Balance: {0}**", Parking.Instance.GetCarBalance(id));
         }
 
-        private static void outputTransactions()
+        private static void OutputTransactions()
         {
             using (StreamReader sr = new StreamReader("Transactions.log", System.Text.Encoding.Default))
             {
@@ -162,7 +162,7 @@ namespace Homework
                 }
             }
         }
-        private static void showLastMinuteEarnings()
+        private static void ShowLastMinuteEarnings()
         {
             var lastMinuteTransactins = Parking.Instance.GetLastMinuteTransactions();
             decimal sum = 0;
@@ -172,8 +172,8 @@ namespace Homework
             }
             Console.WriteLine("**{0}**", sum);
         }
-        private static void showNumberOfCars() => Console.WriteLine("**{0}**", Parking.Instance.GetNumberOfCars());
+        private static void ShowNumberOfCars() => Console.WriteLine("**{0}**", Parking.Instance.GetNumberOfCars());
 
-        private static void showParkingBalance() => Console.WriteLine("**{0}**", Parking.Instance.Balance);
+        private static void ShowParkingBalance() => Console.WriteLine("**{0}**", Parking.Instance.Balance);
     }
 }
