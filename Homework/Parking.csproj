@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{A41B7C03-A1D2-4B34-B35C-6AD3B6E69980}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>Homework</RootNamespace>
     <AssemblyName>Homework</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -46,6 +46,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -58,11 +61,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Car.cs" />
-    <Compile Include="Menu.cs" />
     <Compile Include="NotEnoughMoneyException.cs" />
     <Compile Include="NotEnoughSpaceException.cs" />
     <Compile Include="Parking.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Transaction.cs" />
