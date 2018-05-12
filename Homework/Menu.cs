@@ -68,7 +68,7 @@ namespace Homework
         {
             Console.WriteLine("enter Car Id: ");
             uint id = UInt32.Parse(Console.ReadLine());
-            if (Settings.Parking.IsIdOfCarExist(id))
+            if (Parking.Instance.IsIdOfCarExist(id))
             {
                 throw new WrongCommandException("Id is already exists");
             }
@@ -95,19 +95,19 @@ namespace Homework
             }
             Console.WriteLine("Enter car balance: ");
             decimal balance = Decimal.Parse(Console.ReadLine());
-            Settings.Parking.AddCar(new Car(id, cType, balance));
+            Parking.Instance.AddCar(new Car(id, cType, balance));
         }
         private static void addBalance()
         {
             Console.WriteLine("enter car id: ");
             uint id = UInt32.Parse(Console.ReadLine());
-            if (!Settings.Parking.IsIdOfCarExist(id))
+            if (!Parking.Instance.IsIdOfCarExist(id))
             {
                 throw new WrongCommandException("Can' t find a car with such id");
             }
             Console.WriteLine("enter amount: ");
             decimal amount = Decimal.Parse(Console.ReadLine());
-            Settings.Parking.AddCarMoney(id, amount);
+            Parking.Instance.AddCarMoney(id, amount);
             Console.WriteLine("**Added**");
 
         }
@@ -116,18 +116,18 @@ namespace Homework
         {
             Console.WriteLine("enter car id: ");
             uint id = UInt32.Parse(Console.ReadLine());
-            if (Settings.Parking.GetCarBalance(id) < 0)
+            if (Parking.Instance.GetCarBalance(id) < 0)
             {
                 throw new NotEnoughMoneyException("You havent enough money");
             }
-            Settings.Parking.DeleteCar(id);
+            Parking.Instance.DeleteCar(id);
             Console.WriteLine("**Removed**");
 
         }
 
         private static void showLastMinuteTransactions()
         {
-            var lastMinuteTransactins = Settings.Parking.GetLastMinuteTransactions();
+            var lastMinuteTransactins = Parking.Instance.GetLastMinuteTransactions();
             foreach (var transaction in lastMinuteTransactins)
             {
                 Console.WriteLine(transaction);
@@ -136,19 +136,19 @@ namespace Homework
         private static void exit()
         {
             Exit = true;
-            Settings.Parking.Dispose();
+            Parking.Instance.Dispose();
         }
 
         private static void showFreeSpaces()
         {
-            Console.WriteLine("**{0} free**", Settings.ParkingSpace - Settings.Parking.GetNumberOfCars());
+            Console.WriteLine("**{0} free**", Settings.ParkingSpace - Parking.Instance.GetNumberOfCars());
         }
 
         private static void showCarBalance()
         {
             Console.WriteLine("enter id: ");
             uint id = UInt32.Parse(Console.ReadLine());
-            Console.WriteLine("**Balance: {0}**", Settings.Parking.GetCarBalance(id));
+            Console.WriteLine("**Balance: {0}**", Parking.Instance.GetCarBalance(id));
         }
 
         private static void outputTransactions()
@@ -164,7 +164,7 @@ namespace Homework
         }
         private static void showLastMinuteEarnings()
         {
-            var lastMinuteTransactins = Settings.Parking.GetLastMinuteTransactions();
+            var lastMinuteTransactins = Parking.Instance.GetLastMinuteTransactions();
             decimal sum = 0;
             foreach (var transaction in lastMinuteTransactins)
             {
@@ -172,8 +172,8 @@ namespace Homework
             }
             Console.WriteLine("**{0}**", sum);
         }
-        private static void showNumberOfCars() => Console.WriteLine("**{0}**", Settings.Parking.GetNumberOfCars());
+        private static void showNumberOfCars() => Console.WriteLine("**{0}**", Parking.Instance.GetNumberOfCars());
 
-        private static void showParkingBalance() => Console.WriteLine("**{0}**", Settings.Parking.Balance);
+        private static void showParkingBalance() => Console.WriteLine("**{0}**", Parking.Instance.Balance);
     }
 }

@@ -33,7 +33,7 @@ namespace Homework
 
         public void AddCar(Car car)
         {
-            if (Settings.Parking.Cars.Count >= Settings.ParkingSpace)
+            if (Parking.Instance.GetNumberOfCars() >= Settings.ParkingSpace)
             {
                 throw new NotEnoughSpaceException("Not enough space in the parking lot, please wait");
             }
@@ -87,7 +87,7 @@ namespace Homework
         private void writeTransactionToFile(object obj)
         {
             {
-                var lastMinuteTransactins = Settings.Parking.GetLastMinuteTransactions();
+                var lastMinuteTransactins = Parking.Instance.GetLastMinuteTransactions();
                 using(StreamWriter log = new StreamWriter("Transactions.log", true, System.Text.Encoding.Default))
                 {
                     log.WriteLine("Date and time: {0}", DateTime.Now);
@@ -124,7 +124,7 @@ namespace Homework
 
         public IEnumerable<Transaction> GetLastMinuteTransactions()
         {
-            var lastMinuteTransactins = Settings.Parking.Transactions.Where<Transaction>(t => DateTime.Now - t.TransactionTime < new TimeSpan(0, 1, 0));
+            var lastMinuteTransactins = Parking.Instance.Transactions.Where<Transaction>(t => DateTime.Now - t.TransactionTime < new TimeSpan(0, 1, 0));
             return lastMinuteTransactins;
         }
 
