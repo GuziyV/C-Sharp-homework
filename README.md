@@ -1,8 +1,28 @@
 # C-homework
-Binary studio homework.
+#### File Transaction.log will be created automatically after launching ####
 
-Файл Transactions.log буде створено після вибору одного з пунктів меню при першому запуску програми в папці Homework\bin\Debug.
+#### Configuration section is situated in Setings class ####
 
-Секція конфігурації розташована в статичному конструкторі в класі Settings
+### Functionaity of the program: ###
+
+1. Add the car to the parking lot.
+
+2. Add car balance(by id)
+
+3. Delete car(by id)");
+
+4. Output last minute transaction history
+
+5. Show parking profit
+
+6. Show last minute profit
+
+7. Output Transactions.log
+
+8. Show car balance(by id)
+
+9. Show number of free places
+
+10. Show number of cars in a parking lot
 
 
